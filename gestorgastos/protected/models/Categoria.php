@@ -12,6 +12,9 @@
  */
 class Categoria extends CActiveRecord
 {
+        public function __toString() {
+            return $this->Descripcion;
+        }
 	/**
 	 * @return string the associated database table name
 	 */

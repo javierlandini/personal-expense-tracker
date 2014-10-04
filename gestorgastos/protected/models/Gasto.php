@@ -17,6 +17,7 @@
  */
 class Gasto extends CActiveRecord
 {
+        private $_categoryDescription;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -84,21 +85,33 @@ class Gasto extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($currentMonth = false)
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->order = 'Fecha DESC';
 		$criteria->compare('Gid',$this->Gid);
 		$criteria->compare('Fecha',$this->Fecha,true);
-		$criteria->compare('Descripcion',$this->Descripcion,true);
+		$criteria->compare('t.Descripcion',$this->Descripcion,true);
 		$criteria->compare('Monto',$this->Monto,true);
-		$criteria->compare('IdCategoria',$this->IdCategoria);
                 $criteria->compare('IdUsuario', $this->IdUsuario);
+                if ($currentMonth) {
+                    //we want just the list of the current month in the index action
+                    $now = New DateTime();
+                    $current_date_first_day_of_month = $now->format('Y-m') . '-01';
+                    $db_compare_date = new CDbExpression("'$current_date_first_day_of_month'");
+                    $criteria->addCondition("Fecha >= $db_compare_date");
+                    
+                    //and we add the filter by category
+                    $cat_table = Categoria::model()->tableName();
+                    $criteria->join = "LEFT JOIN $cat_table c ON t.IdCategoria = c.Cid";
+                    $criteria->compare('c.Descripcion',$this->_categoryDescription, true);
+                }
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+                        'pagination' => array('pageSize' => 20),
 		));
 	}
 
@@ -120,11 +133,18 @@ class Gasto extends CActiveRecord
             return parent::beforeSave();
         }
         
-        public function getFechaFormateada() {
-            return Yii::app()->dateFormatter->format('dd-MM-yyyy', $this->Fecha);
+        public function getCategoryDescription() {
+            //the instance does NOT have the category object when it is created
+            //as part of a search in a gridview, that is why we are returning it
+            //only if not empty
+            if (!empty($this->idCategoria)) {
+                return $this->idCategoria;
+            }
+            return $this->_categoryDescription;
         }
         
-        public function getDescripcionCategoria() {
-            return $this->idCategoria->Descripcion;
+        public function setCategoryDescription($category) {
+            $this->_categoryDescription = $category;
         }
+ 
 }

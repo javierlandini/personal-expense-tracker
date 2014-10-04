@@ -22,9 +22,9 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'Gid',
-		'FechaFormateada',
-		'Descripcion',
+		array('label' => 'Fecha', 'value' => $model->Fecha, 'type' => 'date'),
+		array('label' => 'Descripción', 'value' => $model->Descripcion),
 		'Monto',
-		'IdCategoria',
+		array('label' => 'Categoría', 'value' => $model->idCategoria),
 	),
 )); ?>

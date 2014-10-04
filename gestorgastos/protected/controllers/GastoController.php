@@ -63,6 +63,7 @@ class GastoController extends Controller
 	public function actionCreate()
 	{
 		$model=new Gasto;
+                $model->Fecha = date("Y-m-d");
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -87,7 +88,7 @@ class GastoController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+                $model->Fecha = Yii::app()->dateFormatter->format("yyyy-MM-dd", $model->Fecha);
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -122,13 +123,26 @@ class GastoController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Gasto');
-                $criteria = new CDbCriteria();
-                $criteria->order = 'Fecha';
-                $dataProvider->setCriteria($criteria);
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+//		$dataProvider=new CActiveDataProvider('Gasto');
+//                $criteria = new CDbCriteria();
+//                $criteria->order = 'Fecha DESC';
+//                $now = New DateTime();
+//                $current_date_first_day_of_month = $now->format('Y-m') . '-01';
+//                $db_compare_date = new CDbExpression("'$current_date_first_day_of_month'");
+//                $criteria->addCondition("Fecha >= $db_compare_date");
+//                $dataProvider->setCriteria($criteria);
+//		$this->render('index',array(
+//			'dataProvider'=>$dataProvider,
+//		));
+                $model = new Gasto();
+                $model->unsetAttributes();
+                if (isset($_GET['Gasto'])) {
+                    $model->attributes = $_GET['Gasto'];
+                    $model->setCategoryDescription($_GET['Gasto']['CategoryDescription']);
+                }
+                $this->render('index', array(
+                    'model' => $model,
+                ));
 	}
 
 	/**
