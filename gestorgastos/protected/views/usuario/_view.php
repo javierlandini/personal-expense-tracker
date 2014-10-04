@@ -13,10 +13,6 @@
 	<?php echo CHtml::encode($data->Usuario); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Contrasena')); ?>:</b>
-	<?php echo CHtml::encode($data->Contrasena); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Email')); ?>:</b>
 	<?php echo CHtml::encode($data->Email); ?>
 	<br />

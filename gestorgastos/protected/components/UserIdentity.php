@@ -20,7 +20,7 @@ class UserIdentity extends CUserIdentity
 	{
             $criteria = new CDbCriteria();
             $criteria->compare('Usuario', $this->username);
-            $criteria->compare('Contrasena', $this->password);
+            $criteria->compare('Contrasena', md5($this->password));
             $user = Usuario::model()->find($criteria);
             if (empty($user)) {
                 $this->errorCode = self::ERROR_UNKNOWN_IDENTITY;

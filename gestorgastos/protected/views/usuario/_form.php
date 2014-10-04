@@ -27,7 +27,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Contrasena'); ?>
-		<?php echo $form->textField($model,'Contrasena',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->passwordField($model,'Contrasena',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'Contrasena'); ?>
 	</div>
 

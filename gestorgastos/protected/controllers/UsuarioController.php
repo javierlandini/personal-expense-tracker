@@ -75,6 +75,7 @@ class UsuarioController extends Controller
 		if(isset($_POST['Usuario']))
 		{
 			$model->attributes=$_POST['Usuario'];
+                        $model->Contrasena = md5($model->Contrasena);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->Uid));
 		}
@@ -92,13 +93,17 @@ class UsuarioController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+                $old_md5_pass = $model->Contrasena;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Usuario']))
 		{
 			$model->attributes=$_POST['Usuario'];
+                        if ($model->Contrasena != $old_md5_pass) {
+                            //user password was changed, let's encrypt it
+                            $model->Contrasena = md5($model->Contrasena);
+                        }
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->Uid));
 		}
