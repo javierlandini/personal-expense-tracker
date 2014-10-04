@@ -95,7 +95,7 @@ class Gasto extends CActiveRecord
 		$criteria->compare('Fecha',$this->Fecha,true);
 		$criteria->compare('t.Descripcion',$this->Descripcion,true);
 		$criteria->compare('Monto',$this->Monto,true);
-                $criteria->compare('IdUsuario', $this->IdUsuario);
+                $criteria->compare('IdUsuario', Yii::app()->user->getId());
                 if ($currentMonth) {
                     //we want just the list of the current month in the index action
                     $now = New DateTime();

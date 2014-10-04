@@ -50,8 +50,4 @@ class UserIdentity extends CUserIdentity
         public function getId() {
             return $this->_id;
         }
-        
-        public function isAdmin() {
-            return $this->getId() == 1 ? TRUE: FALSE;
-        }
 }
