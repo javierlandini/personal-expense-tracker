@@ -122,9 +122,12 @@ class CategoriaController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Categoria');
+                $model = new Categoria('search');
+		if(isset($_GET['Categoria']))
+			$model->attributes=$_GET['Categoria'];
+                
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+                        'model' => $model,
 		));
 	}
 

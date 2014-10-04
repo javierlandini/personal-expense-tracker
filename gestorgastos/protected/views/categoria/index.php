@@ -1,6 +1,6 @@
 <?php
 /* @var $this CategoriaController */
-/* @var $dataProvider CActiveDataProvider */
+/* @var $model Categoria */
 
 $this->breadcrumbs=array(
 	'Categorias',
@@ -14,7 +14,12 @@ $this->menu=array(
 
 <h1>Categorias</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'categoria-grid',
+	'dataProvider'=>$model->search(),
+	'filter'=>$model,
+	'columns'=>array(
+		'Cid',
+		'Descripcion',
+	),
 )); ?>

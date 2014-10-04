@@ -82,6 +82,7 @@ class Categoria extends CActiveRecord
 
 		$criteria->compare('Cid',$this->Cid);
 		$criteria->compare('Descripcion',$this->Descripcion,true);
+                $criteria->order = 'Descripcion';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
