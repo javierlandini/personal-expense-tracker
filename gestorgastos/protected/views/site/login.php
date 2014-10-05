@@ -4,9 +4,6 @@
 /* @var $form CActiveForm  */
 
 $this->pageTitle=Yii::app()->name . ' - Login';
-//$this->breadcrumbs=array(
-//	'Login',
-//);
 ?>
 
 <h1>Login</h1>
@@ -35,7 +32,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
 		<?php echo $form->passwordField($model,'password'); ?>
 		<?php echo $form->error($model,'password'); ?>
 		<p class="hint">
-			Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
+			Hint: Check on the readme file for the initial user/pass.
 		</p>
 	</div>
 
